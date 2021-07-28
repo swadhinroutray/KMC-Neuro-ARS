@@ -1,0 +1,19 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "KMC Neurosurgery Department Patient Appointment Reminder System",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run-script test"
+  },
+  "author": "Swadhin Routray",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.955.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.13.3",
+    "path": "^0.12.7",
+    "uuidv4": "^6.2.11"
+  }
+}

@@ -7,16 +7,9 @@ import EventIcon from '@material-ui/icons/Event';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
-import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import Checkbox from '@material-ui/core/Checkbox';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import Paper from '@material-ui/core/Paper';
+import { AppointmentDateField } from '../components/AppointmentDateField';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -38,21 +31,19 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const FormPage = () => {
+const FormPage = inject('formStore')(observer(({ formStore }) => {
     const handleInput = (event) => {
         event.preventDefault()
     }
+
     const handleSubmit = (event) => {
         event.preventDefault()
-    }
-
-    const setInitialDates = () => {
-
+        formStore.submit()
     }
 
     const classes = useStyles();
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" >
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
                     <EventIcon />
@@ -90,7 +81,8 @@ const FormPage = () => {
                         label="Date of Discharge"
                         type="date"
                         fullWidth
-                        className={classes.textField}
+                        value={formStore.dateDischarge}
+                        onChange={e => formStore.setDischargeDate(e.target.value)}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -107,61 +99,23 @@ const FormPage = () => {
                         onChange={handleInput}
                     />
 
-
-                    <Paper variant="outlined">
-                        <List>
-                            <ListSubheader color="secondary">
-                                Schedule Follow Up Appointment
-                            </ListSubheader>
-                            <ListItem divider >
-                                <ListItemText id="oneMonth" primary="1 Month after discharge" />
-                                <ListItemSecondaryAction>
-                                    <Checkbox
-                                        edge="end"
-                                    />
-                                </ListItemSecondaryAction>
-                            </ListItem>
-                            <ListItem divider >
-                                <ListItemText id="threeMonths" primary="3 Months after discharge" />
-                                <ListItemSecondaryAction>
-                                    <Checkbox
-                                        edge="end"
-                                    />
-                                </ListItemSecondaryAction>
-                            </ListItem>
-                            <ListItem divider >
-                                <ListItemText id="sixMonths" primary="6 Months after discharge" />
-                                <ListItemSecondaryAction>
-                                    <Checkbox
-                                        edge="end"
-                                    />
-                                </ListItemSecondaryAction>
-                            </ListItem>
-                            <ListItem  >
-                                <ListItemText id="oneYear" primary="1 Year after discharge" />
-                                <ListItemSecondaryAction>
-                                    <Checkbox
-                                        edge="end"
-                                    />
-                                </ListItemSecondaryAction>
-                            </ListItem>
-                        </List>
-                    </Paper>
+                    <AppointmentDateField />
 
                     <Select
-                        margin="normal"
                         variant="outlined"
                         placeholder="Preferred Day of the Week"
                         id="dayOfWeek"
+                        label="Preferred Day of Week"
                         fullWidth
+                        value={formStore.dayOfWeek}
                     >
-                        <MenuItem value={"mon"}>Monday</MenuItem>
-                        <MenuItem value={"tue"}>Tuesday</MenuItem>
-                        <MenuItem value={"wed"}>Wednesday</MenuItem>
-                        <MenuItem value={"thu"}>Thursday</MenuItem>
-                        <MenuItem value={"fri"}>Friday</MenuItem>
-                        <MenuItem value={"sat"}>Saturday</MenuItem>
-                        <MenuItem value={"sun"}>Sunday</MenuItem>
+                        <MenuItem value={"mon"}>Closest Monday</MenuItem>
+                        <MenuItem value={"tue"}>Closest Tuesday</MenuItem>
+                        <MenuItem value={"wed"}>Closest Wednesday</MenuItem>
+                        <MenuItem value={"thu"}>Closest Thursday</MenuItem>
+                        <MenuItem value={"fri"}>Closest Friday</MenuItem>
+                        <MenuItem value={"sat"}>Closest Saturday</MenuItem>
+                        <MenuItem value={"sun"}>Closest Sunday</MenuItem>
                     </Select>
 
 
@@ -179,5 +133,5 @@ const FormPage = () => {
             </div>
         </Container >
     );
-};
+}));
 export { FormPage };

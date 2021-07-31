@@ -4,7 +4,9 @@
   "description": "KMC Neurosurgery Department Patient Appointment Reminder System",
   "main": "index.js",
   "scripts": {
-    "test": "npm run-script test"
+    "test": "nodemon index.js",
+    "start": "node index.js",
+    "prod": "pm2 start index.js --name KMC-ARS"
   },
   "author": "Swadhin Routray",
   "license": "ISC",

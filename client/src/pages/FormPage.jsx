@@ -3,12 +3,14 @@ import { inject, observer } from 'mobx-react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
 import EventIcon from '@material-ui/icons/Event';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
 import { AppointmentDateField } from '../components/AppointmentDateField';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         marginTop: theme.spacing(2),
     },
+
     submit: {
         margin: theme.spacing(3, 0, 2),
     }
@@ -73,6 +76,19 @@ const FormPage = inject('formStore')(observer(({ formStore }) => {
                         id="hospitalNumber"
                         onChange={handleInput}
                     />
+
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        name="diagnosis"
+                        label="Diagnosis"
+                        id="diagnosis"
+                        multiline
+                        minRows="2"
+                        onChange={handleInput}
+                    />
+
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -87,38 +103,30 @@ const FormPage = inject('formStore')(observer(({ formStore }) => {
                             shrink: true,
                         }}
                     />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        name="diagnosis"
-                        label="Diagnosis"
-                        id="diagnosis"
-                        multiline
-                        minRows="2"
-                        onChange={handleInput}
-                    />
+
+                    <FormControl fullWidth margin="normal" variant="outlined">
+                        <InputLabel id="label-for-weekday-select">
+                            Preferred Weekday for FU Appointment
+                        </InputLabel>
+                        <Select
+                            id="dayOfWeek"
+                            labelId="label-for-weekday-select"
+                            label="Preferred Weekday for FU Appointment"
+                            value={formStore.dayOfWeek}
+                            onChange={e => formStore.setDayOfWeek(e.target.value)}
+                        >
+                            <MenuItem value=""><em>None</em></MenuItem>
+                            <MenuItem value={"sun"} dense>Sunday</MenuItem>
+                            <MenuItem value={"mon"} dense>Monday</MenuItem>
+                            <MenuItem value={"tue"} dense>Tuesday</MenuItem>
+                            <MenuItem value={"wed"} dense>Wednesday</MenuItem>
+                            <MenuItem value={"thu"} dense>Thursday</MenuItem>
+                            <MenuItem value={"fri"} dense>Friday</MenuItem>
+                            <MenuItem value={"sat"} dense>Saturday</MenuItem>
+                        </Select>
+                    </FormControl>
 
                     <AppointmentDateField />
-
-                    <Select
-                        variant="outlined"
-                        placeholder="Preferred Day of the Week"
-                        id="dayOfWeek"
-                        label="Preferred Day of Week"
-                        fullWidth
-                        value={formStore.dayOfWeek}
-                    >
-                        <MenuItem value={"mon"}>Closest Monday</MenuItem>
-                        <MenuItem value={"tue"}>Closest Tuesday</MenuItem>
-                        <MenuItem value={"wed"}>Closest Wednesday</MenuItem>
-                        <MenuItem value={"thu"}>Closest Thursday</MenuItem>
-                        <MenuItem value={"fri"}>Closest Friday</MenuItem>
-                        <MenuItem value={"sat"}>Closest Saturday</MenuItem>
-                        <MenuItem value={"sun"}>Closest Sunday</MenuItem>
-                    </Select>
-
-
 
                     <Button
                         type="submit"

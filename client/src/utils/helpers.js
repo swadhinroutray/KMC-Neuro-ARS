@@ -1,6 +1,7 @@
 import { lightFormat } from 'date-fns'
 
-const formatDate = (date) => {
+// Format date instance to the format used by MaterialUI Textfield Datepicker
+const toMaterialFormat = (date) => {
     if (date instanceof Date === false) {
         throw new Error('formatDate: not a date instance');
     }
@@ -8,4 +9,4 @@ const formatDate = (date) => {
     return lightFormat(date, 'yyyy-MM-dd')
 }
 
-export { formatDate }
+export { toMaterialFormat }

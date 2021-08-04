@@ -9,10 +9,18 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        marginTop: theme.spacing(2),
+    },
+}));
 
 export const AppointmentDateField = inject('formStore')(observer(({ formStore }) => {
+    const classes = useStyles();
     return (
-        <Paper variant="outlined">
+        <Paper variant="outlined" className={classes.paper}>
             <List>
                 <ListSubheader>
                     Schedule FU Appointment from Discharge Date
@@ -24,7 +32,7 @@ export const AppointmentDateField = inject('formStore')(observer(({ formStore })
                             edge="start"
                             tabIndex={-1}
                             disableRipple
-                            value={formStore.commonAppointmentsControl["oneMonth"]}
+                            value={formStore.appointmentsControl["oneMonth"]}
                             onChange={e => formStore.setAppointmentControl("oneMonth", e.target.checked)}
                         />
                     </ListItemIcon>
@@ -35,7 +43,9 @@ export const AppointmentDateField = inject('formStore')(observer(({ formStore })
                             name="dateOneMonth"
                             type="date"
                             value={formStore.dateOneMonth}
-                            disabled={!formStore.commonAppointmentsControl["oneMonth"]}
+                            onChange={e => formStore.setDateOneMonth(e.target.value)}
+                            disabled={!formStore.appointmentsControl["oneMonth"]}
+                            InputProps={{ inputProps: { min: formStore.dateToday } }}
                         />
                     </ListItemSecondaryAction>
                 </ListItem>
@@ -44,7 +54,7 @@ export const AppointmentDateField = inject('formStore')(observer(({ formStore })
                         <Checkbox
                             edge="start"
                             tabIndex={-1}
-                            value={formStore.commonAppointmentsControl["threeMonths"]}
+                            value={formStore.appointmentsControl["threeMonths"]}
                             onChange={e => formStore.setAppointmentControl("threeMonths", e.target.checked)}
                             disableRipple
                         />
@@ -55,8 +65,10 @@ export const AppointmentDateField = inject('formStore')(observer(({ formStore })
                             id="dateThreeMonths"
                             name="dateThreeMonths"
                             type="date"
-                            disabled={!formStore.commonAppointmentsControl["threeMonths"]}
+                            onChange={e => formStore.setDateThreeMonths(e.target.value)}
+                            disabled={!formStore.appointmentsControl["threeMonths"]}
                             value={formStore.dateThreeMonths}
+                            InputProps={{ inputProps: { min: formStore.dateToday } }}
                         />
                     </ListItemSecondaryAction>
                 </ListItem>
@@ -67,7 +79,7 @@ export const AppointmentDateField = inject('formStore')(observer(({ formStore })
                             edge="start"
                             tabIndex={-1}
                             disableRipple
-                            value={formStore.commonAppointmentsControl["sixMonths"]}
+                            value={formStore.appointmentsControl["sixMonths"]}
                             onChange={e => formStore.setAppointmentControl("sixMonths", e.target.checked)}
                         />
                     </ListItemIcon>
@@ -78,7 +90,9 @@ export const AppointmentDateField = inject('formStore')(observer(({ formStore })
                             name="dateSixMonths"
                             type="date"
                             value={formStore.dateSixMonths}
-                            disabled={!formStore.commonAppointmentsControl["sixMonths"]}
+                            onChange={e => formStore.setDateSixMonths(e.target.value)}
+                            disabled={!formStore.appointmentsControl["sixMonths"]}
+                            InputProps={{ inputProps: { min: formStore.dateToday } }}
                         />
                     </ListItemSecondaryAction>
                 </ListItem>
@@ -88,7 +102,7 @@ export const AppointmentDateField = inject('formStore')(observer(({ formStore })
                             edge="start"
                             tabIndex={-1}
                             disableRipple
-                            value={formStore.commonAppointmentsControl["oneYear"]}
+                            value={formStore.appointmentsControl["oneYear"]}
                             onChange={e => formStore.setAppointmentControl("oneYear", e.target.checked)}
                         />
                     </ListItemIcon>
@@ -99,7 +113,9 @@ export const AppointmentDateField = inject('formStore')(observer(({ formStore })
                             name="dateOneYear"
                             type="date"
                             value={formStore.dateOneYear}
-                            disabled={!formStore.commonAppointmentsControl["oneYear"]}
+                            onChange={e => formStore.setDateOneYear(e.target.value)}
+                            disabled={!formStore.appointmentsControl["oneYear"]}
+                            InputProps={{ inputProps: { min: formStore.dateToday } }}
                         />
                     </ListItemSecondaryAction>
                 </ListItem>

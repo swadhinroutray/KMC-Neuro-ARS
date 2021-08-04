@@ -12,6 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import { AppointmentDateField } from '../components/AppointmentDateField';
+import { AdditionalAppointmentDateField } from '../components/AdditionalAppointmentField';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -35,9 +36,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const FormPage = inject('formStore')(observer(({ formStore }) => {
-    const handleInput = (event) => {
-        event.preventDefault()
-    }
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -64,7 +62,8 @@ const FormPage = inject('formStore')(observer(({ formStore }) => {
                         label="Patient Name"
                         name="patientName"
                         autoFocus
-                        onChange={handleInput}
+                        value={formStore.patientName}
+                        onChange={e => formStore.setPatientName(e.target.value)}
                     />
                     <TextField
                         variant="outlined"
@@ -74,7 +73,8 @@ const FormPage = inject('formStore')(observer(({ formStore }) => {
                         name="hospitalNumber"
                         label="Hospital Number"
                         id="hospitalNumber"
-                        onChange={handleInput}
+                        value={formStore.hospitalNumber}
+                        onChange={e => formStore.setHospitalNumber(e.target.value)}
                     />
 
                     <TextField
@@ -86,7 +86,8 @@ const FormPage = inject('formStore')(observer(({ formStore }) => {
                         id="diagnosis"
                         multiline
                         minRows="2"
-                        onChange={handleInput}
+                        value={formStore.diagnosis}
+                        onChange={e => formStore.setDiagnosis(e.target.value)}
                     />
 
                     <TextField
@@ -127,6 +128,7 @@ const FormPage = inject('formStore')(observer(({ formStore }) => {
                     </FormControl>
 
                     <AppointmentDateField />
+                    <AdditionalAppointmentDateField />
 
                     <Button
                         type="submit"

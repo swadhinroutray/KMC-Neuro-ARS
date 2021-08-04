@@ -20,31 +20,51 @@ const getNextWeekdayOccurence = (weekday, date) => {
 class FormModel {
     constructor() {
         makeObservable(this, {
+            patientName: observable,
+            hospitalNumber: observable,
+            diagnosis: observable,
+            mobileNumber: observable,
             dateDischarge: observable,
             dayOfWeek: observable,
-            commonAppointmentsControl: observable,
-            commonAppointmentDates: computed.struct,
             dateOneMonth: observable,
             dateThreeMonths: observable,
             dateSixMonths: observable,
             dateOneYear: observable,
+            dateAdditional: observable,
+            dateToday: observable,
+
+            appointmentsControl: observable,
+            appointmentDefaults: computed.struct,
+            findClosestWeekDay: action,
+            submit: action,
+
             setAppointmentControl: action,
             setDischargeDate: action,
             setDate: action,
             setDayOfWeek: action,
-            findClosestWeekDay: action,
-            submit: action
+            setHospitalNumber: action,
+            setMobileNumber: action,
+            setPatientName: action,
+            setDiagnosis: action,
+            setDateOneMonth: action,
+            setDateThreeMonths: action,
+            setDateSixMonths: action,
+            setDateOneYear: action,
+            setDateAdditional: action,
         })
 
     }
     patientName = ""
     hospitalNumber = ""
     diagnosis = ""
+    mobileNumber = ""
     dateDischarge = this.setDate(new Date())
     dateOneMonth = this.setDate(addMonths(new Date(), 1))
     dateThreeMonths = this.setDate(addMonths(new Date(), 3))
     dateSixMonths = this.setDate(addMonths(new Date(), 6))
     dateOneYear = this.setDate(addMonths(new Date(), 12))
+    dateAdditional = ""
+    dateToday = this.setDate(new Date())
     dayOfWeek = ""
 
     // Optional Referral Details
@@ -52,26 +72,26 @@ class FormModel {
     referrerName = ""
     referrerMob = ""
 
-    appointments = {}
-
     // Booleans and Dates for common FU appointments
-    commonAppointmentsControl = {
+    appointmentsControl = {
         "oneMonth": false,
         "threeMonths": false,
         "sixMonths": false,
-        "oneYear": false
+        "oneYear": false,
+        "additional": false,
     }
-    get commonAppointmentDates() {
+    get appointmentDefaults() {
         return {
             "oneMonth": this.setDate(addMonths(new Date(this.dateDischarge), 1)),
             "threeMonths": this.setDate(addMonths(new Date(this.dateDischarge), 3)),
             "sixMonths": this.setDate(addMonths(new Date(this.dateDischarge), 6)),
-            "oneYear": this.setDate(addMonths(new Date(this.dateDischarge), 12))
+            "oneYear": this.setDate(addMonths(new Date(this.dateDischarge), 12)),
+            "additional": ""
         }
     }
 
     setAppointmentControl(fieldName, state) {
-        this.commonAppointmentsControl[fieldName] = state
+        this.appointmentsControl[fieldName] = state
     }
 
     setDischargeDate(date) {
@@ -85,7 +105,7 @@ class FormModel {
 
         this.setDayOfWeek(this.dayOfWeek)
 
-        console.log(this.commonAppointmentDates)
+        console.log(this.appointmentDefaults)
     }
 
     findClosestWeekDay(selectedWeekDay, originalDate) {
@@ -98,27 +118,24 @@ class FormModel {
         let previousOccurence = getNextWeekdayOccurence(preferredWeekDayNumber, subWeeks(formattedDate, 1));
         let nextOccurence = getNextWeekdayOccurence(preferredWeekDayNumber, formattedDate);
 
-        console.log(closestTo(formattedDate, [previousOccurence, nextOccurence]))
         return closestTo(formattedDate, [previousOccurence, nextOccurence])
     }
 
     setDayOfWeek(weekday) {
         this.dayOfWeek = weekday;
-        console.log(weekday)
 
         if (this.dayOfWeek && this.dayOfWeek.trim() !== "") {
-            this.dateOneMonth = this.setDate(this.findClosestWeekDay(this.dayOfWeek, this.commonAppointmentDates["oneMonth"]))
-            this.dateThreeMonths = this.setDate(this.findClosestWeekDay(this.dayOfWeek, this.commonAppointmentDates["threeMonths"]))
-            this.dateSixMonths = this.setDate(this.findClosestWeekDay(this.dayOfWeek, this.commonAppointmentDates["sixMonths"]))
-            this.dateOneYear = this.setDate(this.findClosestWeekDay(this.dayOfWeek, this.commonAppointmentDates["oneYear"]))
+            this.dateOneMonth = this.setDate(this.findClosestWeekDay(this.dayOfWeek, this.appointmentDefaults["oneMonth"]))
+            this.dateThreeMonths = this.setDate(this.findClosestWeekDay(this.dayOfWeek, this.appointmentDefaults["threeMonths"]))
+            this.dateSixMonths = this.setDate(this.findClosestWeekDay(this.dayOfWeek, this.appointmentDefaults["sixMonths"]))
+            this.dateOneYear = this.setDate(this.findClosestWeekDay(this.dayOfWeek, this.appointmentDefaults["oneYear"]))
         }
         else {
             // Reset to defaults
-            console.log("Default")
-            this.dateOneMonth = this.commonAppointmentDates["oneMonth"]
-            this.dateThreeMonths = this.commonAppointmentDates["threeMonths"]
-            this.dateSixMonths = this.commonAppointmentDates["sixMonths"]
-            this.dateOneYear = this.commonAppointmentDates["oneYear"]
+            this.dateOneMonth = this.appointmentDefaults["oneMonth"]
+            this.dateThreeMonths = this.appointmentDefaults["threeMonths"]
+            this.dateSixMonths = this.appointmentDefaults["sixMonths"]
+            this.dateOneYear = this.appointmentDefaults["oneYear"]
         }
     }
 
@@ -131,6 +148,33 @@ class FormModel {
         }
     }
 
+    setHospitalNumber(value) {
+        this.hospitalNumber = value;
+    }
+    setPatientName(value) {
+        this.patientName = value;
+    }
+    setDiagnosis(value) {
+        this.diagnosis = value;
+    }
+    setMobileNumber(value) {
+        this.mobileNumber = value;
+    }
+    setDateOneMonth(newDate) {
+        this.dateOneMonth = this.setDate(new Date(newDate))
+    }
+    setDateThreeMonths(newDate) {
+        this.dateThreeMonths = this.setDate(new Date(newDate))
+    }
+    setDateSixMonths(newDate) {
+        this.dateSixMonths = this.setDate(new Date(newDate))
+    }
+    setDateOneYear(newDate) {
+        this.dateOneYear = this.setDate(new Date(newDate))
+    }
+    setDateAdditional(newDate) {
+        this.dateAdditional = this.setDate(new Date(newDate))
+    }
     submit() {
         alert("Submit Form")
     }

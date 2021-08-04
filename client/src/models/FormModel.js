@@ -32,6 +32,9 @@ class FormModel {
             dateOneYear: observable,
             dateAdditional: observable,
             dateToday: observable,
+            wasReferred: observable,
+            referrerName: observable,
+            referrerMobileNumber: observable,
 
             appointmentsControl: observable,
             appointmentDefaults: computed.struct,
@@ -51,6 +54,9 @@ class FormModel {
             setDateSixMonths: action,
             setDateOneYear: action,
             setDateAdditional: action,
+            setReferrerName: action,
+            setReferrerMobileNumber: action,
+            setWasReferred: action
         })
 
     }
@@ -70,7 +76,7 @@ class FormModel {
     // Optional Referral Details
     wasReferred = false
     referrerName = ""
-    referrerMob = ""
+    referrerMobileNumber = ""
 
     // Booleans and Dates for common FU appointments
     appointmentsControl = {
@@ -174,6 +180,15 @@ class FormModel {
     }
     setDateAdditional(newDate) {
         this.dateAdditional = this.setDate(new Date(newDate))
+    }
+    setWasReferred(state) {
+        this.wasReferred = state;
+    }
+    setReferrerName(name) {
+        this.referrerName = name;
+    }
+    setReferrerMobileNumber(number) {
+        this.referrerMobileNumber = number;
     }
     submit() {
         alert("Submit Form")

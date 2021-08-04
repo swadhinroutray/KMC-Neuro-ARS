@@ -13,6 +13,7 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import { AppointmentDateField } from '../components/AppointmentDateField';
 import { AdditionalAppointmentDateField } from '../components/AdditionalAppointmentField';
+import { ReferralField } from '../components/ReferralField'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -129,6 +130,7 @@ const FormPage = inject('formStore')(observer(({ formStore }) => {
 
                     <AppointmentDateField />
                     <AdditionalAppointmentDateField />
+                    <ReferralField />
 
                     <Button
                         type="submit"

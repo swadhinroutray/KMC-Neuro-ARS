@@ -41,6 +41,10 @@ class FormModel {
     hospitalNumber = ""
     diagnosis = ""
     dateDischarge = this.setDate(new Date())
+    dateOneMonth = this.setDate(addMonths(new Date(), 1))
+    dateThreeMonths = this.setDate(addMonths(new Date(), 3))
+    dateSixMonths = this.setDate(addMonths(new Date(), 6))
+    dateOneYear = this.setDate(addMonths(new Date(), 12))
     dayOfWeek = ""
 
     // Optional Referral Details
@@ -66,11 +70,6 @@ class FormModel {
         }
     }
 
-    dateOneMonth = this.setDate(addMonths(new Date(), 1))
-    dateThreeMonths = this.setDate(addMonths(new Date(), 3))
-    dateSixMonths = this.setDate(addMonths(new Date(), 6))
-    dateOneYear = this.setDate(addMonths(new Date(), 12))
-
     setAppointmentControl(fieldName, state) {
         this.commonAppointmentsControl[fieldName] = state
     }
@@ -84,6 +83,8 @@ class FormModel {
         this.dateSixMonths = this.setDate(addMonths(new Date(date), 6))
         this.dateOneYear = this.setDate(addMonths(new Date(date), 12))
 
+        this.setDayOfWeek(this.dayOfWeek)
+
         console.log(this.commonAppointmentDates)
     }
 
@@ -93,11 +94,10 @@ class FormModel {
         // Convert from MaterialUI datepicker formatting
         let formattedDate = new Date(originalDate)
 
-        // Choose the preferred weekday that's closest to the defaultDate
+        // Choose the preferred weekday that's closest to the default date
         let previousOccurence = getNextWeekdayOccurence(preferredWeekDayNumber, subWeeks(formattedDate, 1));
         let nextOccurence = getNextWeekdayOccurence(preferredWeekDayNumber, formattedDate);
 
-        // console.log(previousOccurence, nextOccurence)
         console.log(closestTo(formattedDate, [previousOccurence, nextOccurence]))
         return closestTo(formattedDate, [previousOccurence, nextOccurence])
     }
@@ -106,11 +106,19 @@ class FormModel {
         this.dayOfWeek = weekday;
         console.log(weekday)
 
-        if (dayOfWeekMapping[this.dayOfWeek]) {
+        if (this.dayOfWeek && this.dayOfWeek.trim() !== "") {
             this.dateOneMonth = this.setDate(this.findClosestWeekDay(this.dayOfWeek, this.commonAppointmentDates["oneMonth"]))
             this.dateThreeMonths = this.setDate(this.findClosestWeekDay(this.dayOfWeek, this.commonAppointmentDates["threeMonths"]))
             this.dateSixMonths = this.setDate(this.findClosestWeekDay(this.dayOfWeek, this.commonAppointmentDates["sixMonths"]))
             this.dateOneYear = this.setDate(this.findClosestWeekDay(this.dayOfWeek, this.commonAppointmentDates["oneYear"]))
+        }
+        else {
+            // Reset to defaults
+            console.log("Default")
+            this.dateOneMonth = this.commonAppointmentDates["oneMonth"]
+            this.dateThreeMonths = this.commonAppointmentDates["threeMonths"]
+            this.dateSixMonths = this.commonAppointmentDates["sixMonths"]
+            this.dateOneYear = this.commonAppointmentDates["oneYear"]
         }
     }
 

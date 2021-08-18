@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { inject, observer } from 'mobx-react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -36,13 +36,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const FormPage = inject('formStore')(observer(({ formStore }) => {
+const FormPage = inject('formStore', 'loginStore')(observer(({ formStore, loginStore }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
         formStore.submit()
     }
-
+    useEffect(() => {
+        // Update the document title using the browser API
+        console.log("Logged in " + loginStore.loggedIn);
+    });
     const classes = useStyles();
     return (
         <Container component="main" maxWidth="xs" >

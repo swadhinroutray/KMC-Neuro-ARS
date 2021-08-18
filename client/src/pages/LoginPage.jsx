@@ -60,6 +60,7 @@ const LoginPage = inject('loginStore')(observer(({ loginStore }) => {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        value={loginStore.formData["email"]}
                         onChange={handleInput}
                     />
                     <TextField
@@ -72,6 +73,7 @@ const LoginPage = inject('loginStore')(observer(({ loginStore }) => {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        value={loginStore.formData["password"]}
                         onChange={handleInput}
                     />
                     <Button

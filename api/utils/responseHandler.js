@@ -8,7 +8,7 @@ function sendResponse(res, data) {
 
 function sendError(res, errorData) {
 	try {
-		res.send({ success: true, data: errorData });
+		res.send({ success: false, data: errorData });
 	} catch (error) {
 		console.log('Error Occured in util');
 		res.send({ success: false, data: 'Error Occured while sending error' });

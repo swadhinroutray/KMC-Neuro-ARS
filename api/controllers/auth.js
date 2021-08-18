@@ -37,9 +37,7 @@ async function login(req, res) {
 			result = await user.findOne({ email: req.body.email.trim() });
 			// console.log(result)
 
-			if (!result) return sendResponse(res, 'Invalid Credentials');
-			else if (result.length == 0)
-				return sendResponse(res, 'Invalid Credentials');
+			if (!result || result.length == 0) return sendError(res, 'Invalid Credentials');
 			else {
 				resultVal = await bcrypt.compare(
 					req.body.password,
@@ -47,7 +45,7 @@ async function login(req, res) {
 				);
 
 				if (!resultVal)
-					return sendResponse(res, 'Invalid Passowrd');
+					return sendError(res, 'Invalid Password');
 				else {
 					req.session.email = req.body.email;
 					req.session.name = result.name;
@@ -63,7 +61,7 @@ async function login(req, res) {
 		}
 	} catch (e) {
 		console.log(e);
-		return sendResponse(res, e);
+		return sendError(res, e);
 	}
 }
 
@@ -75,8 +73,13 @@ async function logout(req, res) {
 	return sendResponse(res, 'Logged Out Successfully');
 }
 
+async function hello(req, res) {
+	return sendResponse(res, "Hello World")
+}
+
 module.exports = {
 	register,
 	login,
 	logout,
+	hello
 };

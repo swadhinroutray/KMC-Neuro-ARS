@@ -17,6 +17,7 @@ function isLoggedin(req, res, next) {
 }
 
 //* Auth Routes
+router.get('/', controller.hello)
 router.post('/register/', controller.register);
 router.post('/login', controller.login);
 router.post('/logout', isLoggedin, controller.logout);

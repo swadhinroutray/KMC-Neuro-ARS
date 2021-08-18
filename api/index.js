@@ -29,7 +29,7 @@ const sec_sess = session({
 	saveUninitialized: true,
 	secret: process.env.SESSION_SECRET_KEY,
 	store: redisStore,
-	cookie: { maxAge: 6048000000, sameSite: 'none' },
+	cookie: { maxAge: 6048000000, sameSite: 'strict' },
 });
 app.use(sec_sess);
 app.use(cookieParser('session'));

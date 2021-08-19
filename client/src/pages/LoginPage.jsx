@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { inject, observer } from 'mobx-react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -6,7 +6,8 @@ import TextField from '@material-ui/core/TextField';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import Container from '@material-ui/core/Container'
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -29,7 +30,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LoginPage = inject('loginStore')(observer(({ loginStore }) => {
-
+    useEffect(() => {
+        loginStore.refreshAuth();
+    });
+    
     const handleInput = (event) => {
         // Set Email or Password field
         loginStore.setField(event.target.id, event.target.value)
@@ -87,6 +91,7 @@ const LoginPage = inject('loginStore')(observer(({ loginStore }) => {
                     </Button>
                 </form>
             </div>
+            {loginStore.authChecked && loginStore.loggedIn ? (<Redirect to="/appointments" />) : null}
         </Container>
     );
 }));

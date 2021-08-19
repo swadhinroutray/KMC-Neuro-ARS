@@ -11,9 +11,12 @@ import Container from '@material-ui/core/Container';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import { LogoutButton } from '../components/LogoutButton'
+import {AppointmentNavButton} from '../components/AppointmentNavButton'
 import { AppointmentDateField } from '../components/AppointmentDateField';
 import { AdditionalAppointmentDateField } from '../components/AdditionalAppointmentField';
 import { ReferralField } from '../components/ReferralField'
+import {Redirect} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -43,13 +46,15 @@ const FormPage = inject('formStore', 'loginStore')(observer(({ formStore, loginS
         formStore.submit()
     }
     useEffect(() => {
-        // Update the document title using the browser API
-        console.log("Logged in " + loginStore.loggedIn);
-    });
+        loginStore.refreshAuth();
+    }, [loginStore]);
+
     const classes = useStyles();
     return (
         <Container component="main" maxWidth="xs" >
             <div className={classes.paper}>
+                <LogoutButton />
+                <AppointmentNavButton/>
                 <Avatar className={classes.avatar}>
                     <EventIcon />
                 </Avatar>
@@ -146,6 +151,8 @@ const FormPage = inject('formStore', 'loginStore')(observer(({ formStore, loginS
                     </Button>
                 </form>
             </div>
+
+            {loginStore.authChecked && !loginStore.loggedIn ? (<Redirect to="/login" />) : null}
         </Container >
     );
 }));

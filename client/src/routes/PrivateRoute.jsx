@@ -7,7 +7,7 @@ export const PrivateRoute = inject('loginStore')(
 		return (
 			<Route
 			render={props =>
-				!loginStore.loggedIn ? (
+				loginStore.authChecked && !loginStore.loggedIn ? (
 					<Redirect to="/login" />
 				) : (
 					<Component {...props} />

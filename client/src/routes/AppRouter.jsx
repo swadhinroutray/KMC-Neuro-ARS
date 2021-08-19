@@ -12,7 +12,7 @@ export const AppRouter = () => {
         <Provider loginStore={loginStore} formStore={formStore}>
             <Switch>
                 <Route path={'/login'} component={LoginPage}></Route>
-                <Route path={'/form'} component={FormPage}></Route>
+                <PrivateRoute path={'/form'} component={FormPage}></PrivateRoute>
                 <PrivateRoute path={'/appointments'} component={AppointmentsPage}></PrivateRoute>
             </Switch>
         </Provider>

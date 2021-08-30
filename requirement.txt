@@ -1,0 +1,6 @@
+Form Fields:
+
+(Date of Discharge, Patient Name, Hospital Number, Diagnosis, Mob#)
+Optional Fields:( Referring Doctor Name, Mob# ) 
+Upcoming Appointment checkboxes —> 1M, 3M, 6M, 1YR
+One optional field to enter a custom appointment date.

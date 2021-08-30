@@ -5,7 +5,7 @@ const app = express();
 const port = process.env.PORT || 8000;
 const db = require('./config/mongo');
 const routes = require('./routes/routes');
-// const AWS = require("aws-sdk");
+const AWS = require('aws-sdk');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const redisStore = require('./config/redis')(session);
@@ -14,14 +14,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 db.connectMongo();
-// AWS.config.update({
-//   Bucket: process.env.BUCKET_NAME,
-//   accessKeyId: process.env.AWS_KEY,
-//   secretAccessKey: process.env.AWS_SECRET,
-//   region: process.env.AWS_REGION,
-// });
-
-// s3 = new AWS.S3({ apiVersion: "2006-03-01" });
+AWS.config.update({
+	accessKeyId: process.env.AWS_KEY,
+	secretAccessKey: process.env.AWS_SECRET,
+	region: process.env.AWS_REGION,
+});
 
 //! Setting up Auth Session
 const sec_sess = session({
@@ -29,7 +26,7 @@ const sec_sess = session({
 	saveUninitialized: true,
 	secret: process.env.SESSION_SECRET_KEY,
 	store: redisStore,
-	cookie: { maxAge: 6048000000, sameSite: 'strict', httpOnly: false},
+	cookie: { maxAge: 6048000000, sameSite: 'strict', httpOnly: false },
 });
 app.use(sec_sess);
 app.use(cookieParser('session'));

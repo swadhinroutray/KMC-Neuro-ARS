@@ -53,7 +53,12 @@ const FormPage = inject('formStore', 'loginStore')(observer(({ formStore, loginS
     return (
         <Container component="main" maxWidth="xs" >
             <div className={classes.paper}>
-                <LogoutButton />
+                <LogoutButton style={{
+                    position: "absolute",
+                    right: '2vh',
+                    top: '2vh',
+                    margin: '1vh',
+                }}/>
                 <AppointmentNavButton/>
                 <Avatar className={classes.avatar}>
                     <EventIcon />
@@ -84,6 +89,18 @@ const FormPage = inject('formStore', 'loginStore')(observer(({ formStore, loginS
                         id="hospitalNumber"
                         value={formStore.hospitalNumber}
                         onChange={e => formStore.setHospitalNumber(e.target.value)}
+                    />
+
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="mobileNumber"
+                        label="Mobile Number"
+                        id="mobileNumber"
+                        value={formStore.mobileNumber}
+                        onChange={e => formStore.setMobileNumber(e.target.value)}
                     />
 
                     <TextField

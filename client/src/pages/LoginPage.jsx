@@ -91,7 +91,7 @@ const LoginPage = inject('loginStore')(observer(({ loginStore }) => {
                     </Button>
                 </form>
             </div>
-            {loginStore.authChecked && loginStore.loggedIn ? (<Redirect to="/appointments" />) : null}
+            {loginStore.loggedIn ? (<Redirect to="/appointments" />) : null}
         </Container>
     );
 }));

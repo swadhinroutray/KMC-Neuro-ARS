@@ -79,6 +79,8 @@ class LoginModel {
             console.err(err);
         }
         finally {
+            Cookies.remove("connect.sid", { path: '' })
+            console.log("Logged Out")
             this.authChecked = true;
             this.loggedIn = false;
         }

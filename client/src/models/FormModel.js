@@ -1,6 +1,7 @@
 import { observable, action, makeObservable, computed } from 'mobx';
 import { addMonths, subWeeks, closestTo, nextSunday, nextMonday, nextTuesday, nextWednesday, nextThursday, nextFriday, nextSaturday } from 'date-fns'
 import { toMaterialFormat } from '../utils/helpers'
+import { post } from '../utils/api'
 
 const dayOfWeekMapping = { "sun": 0, "mon": 1, "tue": 2, "wed": 3, "thu": 4, "fri": 5, "sat": 6 };
 const getNextWeekdayOccurence = (weekday, date) => {
@@ -39,7 +40,7 @@ class FormModel {
             appointmentsControl: observable,
             appointmentDefaults: computed.struct,
             findClosestWeekDay: action,
-            submit: action,
+            submit: action,handleResponse:action,
 
             setAppointmentControl: action,
             setDischargeDate: action,
@@ -155,16 +156,16 @@ class FormModel {
     }
 
     setHospitalNumber(value) {
-        this.hospitalNumber = value;
+        this.hospitalNumber = value.trim();
     }
     setPatientName(value) {
-        this.patientName = value;
+        this.patientName = value.trim();
     }
     setDiagnosis(value) {
-        this.diagnosis = value;
+        this.diagnosis = value.trim();
     }
     setMobileNumber(value) {
-        this.mobileNumber = value;
+        this.mobileNumber = value.trim();
     }
     setDateOneMonth(newDate) {
         this.dateOneMonth = this.setDate(new Date(newDate))
@@ -185,13 +186,39 @@ class FormModel {
         this.wasReferred = state;
     }
     setReferrerName(name) {
-        this.referrerName = name;
+        this.referrerName = name.trim();
     }
     setReferrerMobileNumber(number) {
-        this.referrerMobileNumber = number;
+        this.referrerMobileNumber = number.trim();
     }
     submit() {
-        alert("Submit Form")
+        const postBody = {
+            name: this.patientName,
+            email: "default@gmail.com",
+			contact: this.mobileNumber,
+			hospitalContact: this.hospitalNumber,
+			diagnosis: this.diagnosis,
+			
+			dischargeDate: this.dateDischarge,
+			appointmentDate1: this.dateOneMonth,
+			appointmentDate3: this.dateThreeMonths,
+			appointmentDate6: this.dateSixMonths,
+			appointmentDate12: this.dateOneYear,
+            customAppointmentDate: this.dateAdditional,
+            
+            doctorName: this.referrerName,
+            doctorNumber: this.referrerMobileNumber,
+        }
+
+        try {
+            post('/api/patient', postBody).then(this.handleResponse);
+        }
+        catch (err) {
+            console.err(err);
+        }
+    }
+    handleResponse = res => {
+        console.log(res)
     }
 }
 

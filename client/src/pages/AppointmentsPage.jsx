@@ -1,27 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { inject, observer } from 'mobx-react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import {FormNavButton} from '../components/FormNavButton'
+import {LogoutButton} from '../components/LogoutButton'
 import Table from '../components/Table'
+import {Redirect} from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 
-const AppointmentsPage = () => {
+const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      flexGrow: 1,
+    },
+}));
+  
+const AppointmentsPage = inject('formStore', 'loginStore')(observer(({ formStore, loginStore }) => {
+    useEffect(() => {
+        loginStore.refreshAuth();
+    }, [loginStore]);
+    const classes = useStyles();
     return (
         <div>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton edge="start" color="inherit" aria-label="menu">
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6">
-                        Appointment Reminder Form
+                    <Typography variant="h6" className={classes.title}>
+                        Upcoming Appointments
                     </Typography>
+                    <FormNavButton />
+                    <LogoutButton/>
                 </Toolbar>
             </AppBar>
             <Table />
+            {loginStore.authChecked && !loginStore.loggedIn ? (<Redirect to="/login" />) : null}
         </div>
     );
-};
+}));
 
 export { AppointmentsPage };

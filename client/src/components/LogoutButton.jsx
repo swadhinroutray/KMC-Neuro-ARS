@@ -4,18 +4,13 @@ import Typography from '@material-ui/core/Typography'
 import { inject, observer } from 'mobx-react';
 
 export const LogoutButton = inject('loginStore')(
-    observer(({ loginStore }) => {
+    observer(({ loginStore, ...rest }) => {
         return (
             <Button
                 variant="contained"
-                style={{
-                    position: "absolute",
-                    right: '2vh',
-                    top: '2vh',
-                    margin: '1vh',
-                }}
                 color="secondary"
-                onClick={()=> loginStore.logout()}
+                onClick={() => loginStore.logout()}
+                {...rest}
             >
                 <Typography variant="button">Logout</Typography>
             </Button>

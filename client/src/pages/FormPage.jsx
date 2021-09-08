@@ -66,7 +66,7 @@ const FormPage = inject('formStore', 'loginStore')(observer(({ formStore, loginS
                 <Typography component="h1" variant="h5">
                     Appointment Scheduling Form
                 </Typography>
-                <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                <form className={classes.form} onSubmit={handleSubmit}>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -170,6 +170,7 @@ const FormPage = inject('formStore', 'loginStore')(observer(({ formStore, loginS
             </div>
 
             {loginStore.authChecked && !loginStore.loggedIn ? (<Redirect to="/login" />) : null}
+            {formStore.isSubmitted ? (<Redirect to="/form"/>) : null}
         </Container >
     );
 }));

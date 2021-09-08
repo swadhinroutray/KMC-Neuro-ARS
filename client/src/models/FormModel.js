@@ -2,6 +2,8 @@ import { observable, action, makeObservable, computed } from 'mobx';
 import { addMonths, subWeeks, closestTo, nextSunday, nextMonday, nextTuesday, nextWednesday, nextThursday, nextFriday, nextSaturday } from 'date-fns'
 import { toMaterialFormat } from '../utils/helpers'
 import { post } from '../utils/api'
+import { toast } from 'react-toastify';
+import { activeGridFilterItemsSelector } from '@material-ui/data-grid';
 
 const dayOfWeekMapping = { "sun": 0, "mon": 1, "tue": 2, "wed": 3, "thu": 4, "fri": 5, "sat": 6 };
 const getNextWeekdayOccurence = (weekday, date) => {
@@ -40,7 +42,8 @@ class FormModel {
             appointmentsControl: observable,
             appointmentDefaults: computed.struct,
             findClosestWeekDay: action,
-            submit: action,handleResponse:action,
+            submit: action, handleResponse: action,
+            isSubmitted: observable, 
 
             setAppointmentControl: action,
             setDischargeDate: action,
@@ -73,6 +76,7 @@ class FormModel {
     dateAdditional = ""
     dateToday = this.setDate(new Date())
     dayOfWeek = ""
+    isSubmitted = false;
 
     // Optional Referral Details
     wasReferred = false
@@ -191,7 +195,11 @@ class FormModel {
     setReferrerMobileNumber(number) {
         this.referrerMobileNumber = number.trim();
     }
+    setIsSubmitted(state) {
+        this.isSubmitted = state;
+    }
     submit() {
+        this.setIsSubmitted(false);
         const postBody = {
             name: this.patientName,
             email: "default@gmail.com",
@@ -219,6 +227,18 @@ class FormModel {
     }
     handleResponse = res => {
         console.log(res)
+        if (res.success === true) {
+            toast('Appointment Record Added!', {
+				position: 'top-right',
+				autoClose: 4000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: false,
+				progress: undefined,
+			});
+        }
+        this.setIsSubmitted(false);
     }
 }
 

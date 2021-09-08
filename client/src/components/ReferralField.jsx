@@ -44,33 +44,35 @@ export const ReferralField = inject('formStore')(observer(({ formStore }) => {
                 </FormControl>
             </AccordionSummary>
             <AccordionDetails>
-                <div className={classes.paper}>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="referrerName"
-                        label="Referrer Name"
-                        name="referrerName"
-                        autoFocus
-                        value={formStore.referrerName}
-                        onChange={e => formStore.setReferrerName(e.target.value)}
-                    />
+                {formStore.wasReferred &&
+                    <div className={classes.paper}>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="referrerName"
+                            label="Referrer Name"
+                            name="referrerName"
+                            autoFocus
+                            value={formStore.referrerName}
+                            onChange={e => formStore.setReferrerName(e.target.value)}
+                        />
 
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="referrerMobileNumber"
-                        label="Referrer Mobile Number"
-                        name="referrerMobileNumber"
-                        autoFocus
-                        value={formStore.referrerMobileNumber}
-                        onChange={e => formStore.setReferrerMobileNumber(e.target.value)}
-                    />
-                </div>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="referrerMobileNumber"
+                            label="Referrer Mobile Number"
+                            name="referrerMobileNumber"
+                            autoFocus
+                            value={formStore.referrerMobileNumber}
+                            onChange={e => formStore.setReferrerMobileNumber(e.target.value)}
+                        />
+                    </div>
+                }
             </AccordionDetails>
         </Accordion>
     );

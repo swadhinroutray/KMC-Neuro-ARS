@@ -5,7 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {FormNavButton} from '../components/FormNavButton'
 import {LogoutButton} from '../components/LogoutButton'
-import Table from '../components/Table'
+import {Table} from '../components/Table'
 import {Redirect} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 

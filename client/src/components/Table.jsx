@@ -1,5 +1,5 @@
 import { DataGrid } from '@material-ui/data-grid';
-
+import { inject, observer } from 'mobx-react';
 
 const columns = [
     { field: 'col1', headerName: 'Name', width: 300 },
@@ -13,14 +13,14 @@ const rows = [
     { id: 3, col1: 'Lennis', col2: 'E123', col3: 'Pretty Dead' },
 ];
 
-export default function Table() {
+export const Table = inject('appointmentStore')(observer(({ appointmentStore }) => {
     return (
         <div style={{ height: 400, width: '100%' }}>
             <DataGrid
-                rows={rows}
+                rows={appointmentStore.appointments}
                 columns={columns}
                 disableSelectionOnClick
             />
         </div>
     );
-}
+}));

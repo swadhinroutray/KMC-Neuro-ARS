@@ -3,7 +3,6 @@ import { addMonths, subWeeks, closestTo, nextSunday, nextMonday, nextTuesday, ne
 import { toMaterialFormat } from '../utils/helpers'
 import { post } from '../utils/api'
 import { toast } from 'react-toastify';
-import { activeGridFilterItemsSelector } from '@material-ui/data-grid';
 
 const dayOfWeekMapping = { "sun": 0, "mon": 1, "tue": 2, "wed": 3, "thu": 4, "fri": 5, "sat": 6 };
 const getNextWeekdayOccurence = (weekday, date) => {

@@ -1,6 +1,7 @@
 import { observable, action, makeObservable } from 'mobx';
 import { post } from '../utils/api'
 import Cookies from 'js-cookie'
+import { toast } from 'react-toastify';
 
 class LoginModel {
     constructor() {
@@ -68,6 +69,15 @@ class LoginModel {
         } else {
             this.loggedIn = false;
             console.log("Error on Login")
+            toast.error(`Error: ${res.data !== ''? res.data: 'Check the provided credentials.'}`, {
+				position: 'top-right',
+				autoClose: 4000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: false,
+				progress: undefined,
+			});
         }
     }
 

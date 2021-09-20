@@ -227,15 +227,28 @@ class FormModel {
     handleResponse = res => {
         console.log(res)
         if (res.success === true) {
-            toast('Appointment Record Added!', {
-				position: 'top-right',
-				autoClose: 4000,
-				hideProgressBar: true,
-				closeOnClick: true,
+            toast.success('Appointment Record Added!', {
+                position: 'top-right',
+                autoClose: false,
+				hideProgressBar: false,
+				closeOnClick: false,
 				pauseOnHover: true,
-				draggable: false,
-				progress: undefined,
+                draggable: false,
+                progress:undefined
 			});
+        }
+        else {
+            toast.error(
+                `Error: ${res.data ? JSON.stringify(res.data) : "Couldn't add appointment record. Check all fields."}`
+                , {
+                    position: 'top-right',
+                    autoClose: false,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined
+                });
         }
         this.setIsSubmitted(false);
     }

@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container'
 import { Redirect } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -91,6 +92,7 @@ const LoginPage = inject('loginStore')(observer(({ loginStore }) => {
                     </Button>
                 </form>
             </div>
+           <ToastContainer />
             {loginStore.loggedIn ? (<Redirect to="/appointments" />) : null}
         </Container>
     );

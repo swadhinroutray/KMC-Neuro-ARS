@@ -32,7 +32,7 @@ export const Table = inject('appointmentStore')(observer(({ appointmentStore }) 
     ];
 
     return (
-        <div style={{ height: 400, width: '100%' }}>
+        <div style={{ height: '100vh', width: '100%' }}>
             <DataGrid
                 rows={appointmentStore.appointments}
                 columns={columns}

@@ -17,6 +17,7 @@ import { AppointmentDateField } from '../components/AppointmentDateField';
 import { AdditionalAppointmentDateField } from '../components/AdditionalAppointmentField';
 import { ReferralField } from '../components/ReferralField'
 import {Redirect} from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -167,6 +168,7 @@ const FormPage = inject('formStore', 'loginStore')(observer(({ formStore, loginS
                         Submit
                     </Button>
                 </form>
+                <ToastContainer/>
             </div>
 
             {loginStore.authChecked && !loginStore.loggedIn ? (<Redirect to="/login" />) : null}

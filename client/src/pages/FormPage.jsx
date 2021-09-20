@@ -108,6 +108,7 @@ const FormPage = inject('formStore', 'loginStore')(observer(({ formStore, loginS
                         variant="outlined"
                         margin="normal"
                         fullWidth
+                        required
                         name="diagnosis"
                         label="Diagnosis"
                         id="diagnosis"
@@ -138,6 +139,7 @@ const FormPage = inject('formStore', 'loginStore')(observer(({ formStore, loginS
                         </InputLabel>
                         <Select
                             id="dayOfWeek"
+                            required
                             labelId="label-for-weekday-select"
                             label="Preferred Weekday for FU Appointment"
                             value={formStore.dayOfWeek}

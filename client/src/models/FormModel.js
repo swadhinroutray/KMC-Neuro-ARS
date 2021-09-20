@@ -225,7 +225,7 @@ class FormModel {
         }
     }
     handleResponse = res => {
-        console.log(res)
+        console.log(res.data)
         if (res.success === true) {
             toast.success('Appointment Record Added!', {
                 position: 'top-right',
@@ -239,7 +239,7 @@ class FormModel {
         }
         else {
             toast.error(
-                `Error: ${res.data ? JSON.stringify(res.data) : "Couldn't add appointment record. Check all fields."}`
+                `Error: ${res.data ? JSON.stringify(res.data.errors) : "Couldn't add appointment record. Check all fields."}`
                 , {
                     position: 'top-right',
                     autoClose: false,

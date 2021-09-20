@@ -18,6 +18,8 @@ import { AdditionalAppointmentDateField } from '../components/AdditionalAppointm
 import { ReferralField } from '../components/ReferralField'
 import {Redirect} from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import history from '../routes/history';
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {

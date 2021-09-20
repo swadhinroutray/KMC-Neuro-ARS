@@ -3,6 +3,7 @@ import { addMonths, subWeeks, closestTo, nextSunday, nextMonday, nextTuesday, ne
 import { toMaterialFormat } from '../utils/helpers'
 import { post } from '../utils/api'
 import { toast } from 'react-toastify';
+import history from '../routes/history';
 
 const dayOfWeekMapping = { "sun": 0, "mon": 1, "tue": 2, "wed": 3, "thu": 4, "fri": 5, "sat": 6 };
 const getNextWeekdayOccurence = (weekday, date) => {
@@ -235,7 +236,7 @@ class FormModel {
 				pauseOnHover: true,
                 draggable: false,
                 progress:undefined
-			});
+            });
         }
         else {
             toast.error(

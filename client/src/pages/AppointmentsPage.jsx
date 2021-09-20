@@ -8,6 +8,7 @@ import {LogoutButton} from '../components/LogoutButton'
 import {Table} from '../components/Table'
 import {Redirect} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import {DeleteConfirmDialog} from '../components/DeleteConfirmDialog'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,6 +39,7 @@ const AppointmentsPage = inject('formStore', 'loginStore')(observer(({ formStore
                 </Toolbar>
             </AppBar>
             <Table />
+            <DeleteConfirmDialog/>
             {loginStore.authChecked && !loginStore.loggedIn ? (<Redirect to="/login" />) : null}
         </div>
     );

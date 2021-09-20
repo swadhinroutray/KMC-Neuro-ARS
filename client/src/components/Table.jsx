@@ -1,19 +1,36 @@
 import { DataGrid } from '@material-ui/data-grid';
+import Button from '@material-ui/core/Button';
 import { inject, observer } from 'mobx-react';
 
-const columns = [
-    { field: 'col1', headerName: 'Name', width: 300 },
-    { field: 'col2', headerName: 'Hospital #', width: 200 },
-    { field: 'col3', headerName: 'Diagnosis', width: 300 },
-];
-
-const rows = [
-    { id: 1, col1: 'Dennis', col2: 'J123', col3: 'Dead' },
-    { id: 2, col1: 'Jennis', col2: 'G123', col3: 'Almost Dead' },
-    { id: 3, col1: 'Lennis', col2: 'E123', col3: 'Pretty Dead' },
-];
-
 export const Table = inject('appointmentStore')(observer(({ appointmentStore }) => {
+    const handleButtonClick = (cellValues) => {
+        console.log("Selected", cellValues.id)
+        appointmentStore.setSelectedAppointmentId(cellValues.id)
+        appointmentStore.setConfirmDialogOpen(true)
+    }
+
+    const columns = [
+        { field: 'col1', headerName: 'Name', width: 200 },
+        { field: 'col2', headerName: 'Hospital #', width: 140 },
+        { field: 'col3', headerName: 'Diagnosis', width: 300 },
+        {
+            field: "delete", headerName: "Delete",
+            renderCell: (cellValues) => {
+              return (
+                <Button
+                  variant="contained"
+                  color= "secondary"
+                  onClick={(event) => {
+                    handleButtonClick(cellValues);
+                  }}
+                >
+                  Delete
+                </Button>
+              );
+            }
+          }
+    ];
+
     return (
         <div style={{ height: 400, width: '100%' }}>
             <DataGrid

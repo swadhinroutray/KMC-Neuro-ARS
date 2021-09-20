@@ -107,3 +107,5 @@ dist
 api/node_modules
 
 SMS-Sender-KMC.csv
+**.DS_Store
+*.rdp

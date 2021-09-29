@@ -1,11 +1,13 @@
 const { sendError, sendResponse } = require('../utils/responseHandler');
 const { patient } = require('../models/patientModel');
 const { sendMessage } = require('../utils/aws');
+const { uuid } = require('uuidv4');
 
 async function createEntry(req, res) {
 	try {
 		const data = req.body;
 		const obj = new patient({
+			patientID: uuid(),
 			name: data.name.trim(),
 			email: data.email.trim(),
 			contact: data.contact,

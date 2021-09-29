@@ -9,6 +9,8 @@ const AWS = require('aws-sdk');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const redisStore = require('./config/redis')(session);
+const cron = require('node-cron');
+const cronJobs = require('./utils/cronJobs');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -32,6 +34,24 @@ app.use(sec_sess);
 app.use(cookieParser('session'));
 
 app.use('/api', routes);
+
+//? CRON Jobs
+cron.schedule(
+	'0 7 * * *',
+	() => {
+		try {
+			console.log('Broadcast CRON set');
+			cronJobs.checkAndSendSMS();
+		} catch (error) {
+			console.log(error);
+			console.log('Shutting down Server');
+			shutDown();
+		}
+	},
+	{
+		timezone: 'Asia/Kolkata',
+	}
+);
 
 app.listen(port, () => {
 	console.log(`Listening on ${port}`);

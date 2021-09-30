@@ -1,18 +1,10 @@
 import { observable, action, makeObservable } from 'mobx';
 import { toast } from 'react-toastify'
+import { get } from '../utils/api'
 
 class AppointmentModel {
     //TODO: Remove placeholder data later. 
-    _appointments = [
-        { id: 1, col1: 'Dennis', col2: 'J123', col3: 'Trauma' },
-        { id: 2, col1: 'Jennis', col2: 'G123', col3: 'Heart Disease' },
-        { id: 3, col1: 'Lennis', col2: 'E123', col3: 'Bad bad' },
-        { id: 4, col1: 'Dennis', col2: 'J123', col3: 'Trauma' },
-        { id: 5, col1: 'Jennis', col2: 'G123', col3: 'Heart Disease' },
-        { id: 6, col1: 'Dennis', col2: 'J123', col3: 'Trauma' },
-        { id: 7, col1: 'Jennis', col2: 'G123', col3: 'Heart Disease' },
-        { id: 8, col1: 'Dennis', col2: 'J123', col3: 'Trauma' }
-    ]
+    _appointments = []
     isConfirmDialogOpen = false
     selectedAppointmentId = -1
     
@@ -23,7 +15,9 @@ class AppointmentModel {
             deleteAppointment: action,
             selectedAppointmentId: observable,
             setSelectedAppointmentId: action, 
-            setConfirmDialogOpen: action
+            setConfirmDialogOpen: action,
+            fetchAppointments: action,
+            fetchAppointmentsControl: action
         });
     }
 
@@ -60,6 +54,38 @@ class AppointmentModel {
 
     setSelectedAppointmentId(appointmentId) {
         this.selectedAppointmentId = appointmentId;
+    }
+
+    fetchAppointments = () => {
+        try {
+            get('/api/getpatients').then(this.fetchAppointmentsControl);
+        }
+        catch (err) {
+            console.err(err);
+        }
+    }
+
+    fetchAppointmentsControl = (res) =>  {
+        console.log(res)
+        if (res.success) {
+            this._appointments = res.data.map(patientRecord => ({
+                id:   patientRecord._id,
+                col1: patientRecord.name,
+                col2: patientRecord.hospitalContact,
+                col3: patientRecord.diagnosis
+            }))
+        }
+        else {
+            toast.error("Error: Could not fetch appointment information.", {
+				position: 'top-right',
+				autoClose: 4000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: false,
+				progress: undefined,
+			});
+        }
     }
 }
 

@@ -44,7 +44,7 @@ class AppointmentModel {
 
         // TODO: Send delete request.
         this._appointments.splice(index, 1)
-        console.log("Deleted ID ", this.selectedAppointmentId)
+        console.log("Deleting appointment " + this._appointments[index]["appointmentType"])
     }
 
     setConfirmDialogOpen(state) {
@@ -67,12 +67,66 @@ class AppointmentModel {
     fetchAppointmentsControl = (res) =>  {
         console.log(res)
         if (res.success) {
-            this._appointments = res.data.map(patientRecord => ({
-                id:   (patientRecord.patientID? patientRecord.patientID: patientRecord._id),
-                col1: patientRecord.name,
-                col2: patientRecord.hospitalContact,
-                col3: patientRecord.diagnosis
-            }))
+            // Add separate appointment entries for each date.
+            this._appointments = res.data.flatMap(function (patientRecord) {
+                let _expandedAppointments = []
+                if ("appointmentDate1" in patientRecord && patientRecord.appointmentDate1 !== null) {
+                    _expandedAppointments.push({
+                        id: patientRecord.patientID.concat("oneMonth"),
+                        col1: patientRecord.name,
+                        col2: patientRecord.appointmentDate1,
+                        col3: patientRecord.diagnosis,
+                        col4: patientRecord.hospitalContact,
+                        appointmentType: "oneMonth",
+                        patientID: patientRecord.patientID
+                    })
+                }
+                if ("appointmentDate3" in patientRecord && patientRecord.appointmentDate3 !== null) {
+                    _expandedAppointments.push({
+                        id: patientRecord.patientID.concat("threeMonths"),
+                        col1: patientRecord.name,
+                        col2: patientRecord.appointmentDate3,
+                        col3: patientRecord.diagnosis,
+                        col4: patientRecord.hospitalContact,
+                        appointmentType: "threeMonths",
+                        patientID: patientRecord.patientID
+                    })
+                }
+                if ("appointmentDate6" in patientRecord && patientRecord.appointmentDate6 !== null) {
+                    _expandedAppointments.push({
+                        id: patientRecord.patientID.concat("sixMonths"),
+                        col1: patientRecord.name,
+                        col2: patientRecord.appointmentDate6,
+                        col3: patientRecord.diagnosis,
+                        col4: patientRecord.hospitalContact,
+                        appointmentType: "sixMonths",
+                        patientID: patientRecord.patientID
+                    })
+                }
+                if ("appointmentDate12" in patientRecord && patientRecord.appointmentDate12 !== null) {
+                    _expandedAppointments.push({
+                        id: patientRecord.patientID.concat("twelveMonths"),
+                        col1: patientRecord.name,
+                        col2: patientRecord.appointmentDate12,
+                        col3: patientRecord.diagnosis,
+                        col4: patientRecord.hospitalContact,
+                        appointmentType: "twelveMonths",
+                        patientID: patientRecord.patientID
+                    })
+                }
+                if ("customAppointmentDate" in patientRecord && patientRecord.customAppointmentDate !== null) {
+                    _expandedAppointments.push({
+                        id: patientRecord.patientID.concat("custom"),
+                        col1: patientRecord.name,
+                        col2: patientRecord.customAppointmentDate,
+                        col3: patientRecord.diagnosis,
+                        col4: patientRecord.hospitalContact,
+                        appointmentType: "custom",
+                        patientID: patientRecord.patientID
+                    })
+                }
+                return _expandedAppointments;
+            })
         }
         else {
             toast.error("Error: Could not fetch appointment information.", {

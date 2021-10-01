@@ -76,7 +76,8 @@ async function cancelAppointment(req, res) {
 		if (!result) {
 			sendError(res, "Update Error: Couldn't find that patientID");
 		}
-		return sendResponse(res, result);
+
+		return sendResponse(res, "Successfully cancelled appointment!");
 
 	} catch (error) {
 		console.log(error);

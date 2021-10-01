@@ -81,7 +81,7 @@ async function cancelAppointment(req, res) {
 
 	} catch (error) {
 		console.log(error);
-		sendResponse(res, 'An error occured');
+		sendError(res, 'An unknown error occured while cancelling the appointment.');
 	}
 }
 

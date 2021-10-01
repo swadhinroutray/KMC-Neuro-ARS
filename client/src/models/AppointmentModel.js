@@ -1,6 +1,6 @@
 import { observable, action, makeObservable } from 'mobx';
 import { toast } from 'react-toastify'
-import { get } from '../utils/api'
+import { get, post } from '../utils/api'
 
 class AppointmentModel {
     _appointments = []
@@ -12,6 +12,7 @@ class AppointmentModel {
             _appointments: observable,
             isConfirmDialogOpen: observable,
             deleteAppointment: action,
+            deleteAppointmentControl: action, 
             selectedAppointmentId: observable,
             setSelectedAppointmentId: action, 
             setConfirmDialogOpen: action,
@@ -42,9 +43,43 @@ class AppointmentModel {
             return
         }
 
-        // TODO: Send delete request.
-        this._appointments.splice(index, 1)
-        console.log("Deleting appointment " + this._appointments[index]["appointmentType"])
+        try {
+            post('/api/cancel', {
+                patientID: this._appointments[index]["patientID"],
+                appointVal: this._appointments[index]["appointmentType"]
+            }).then(res => this.deleteAppointmentControl(res, index));
+        }   
+        catch (err) {
+            console.err(err);
+            toast.error("Error: An error occured. Couldn't delete the appointment", {
+				position: 'top-right',
+				autoClose: 4000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: false,
+				progress: undefined,
+			});
+        }
+    }
+
+    deleteAppointmentControl(res, index) {
+        if (res.success) {
+            console.log("Deleted appointment " + this._appointments[index]["appointmentType"])
+            // Remove from the local array too. 
+            this._appointments.splice(index, 1)
+        }
+        else {
+            toast.error("Error: An error occured. Couldn't delete the appointment", {
+				position: 'top-right',
+				autoClose: 4000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: false,
+				progress: undefined,
+			});
+        }
     }
 
     setConfirmDialogOpen(state) {
@@ -77,7 +112,7 @@ class AppointmentModel {
                         col2: patientRecord.appointmentDate1,
                         col3: patientRecord.diagnosis,
                         col4: patientRecord.hospitalContact,
-                        appointmentType: "oneMonth",
+                        appointmentType: 1,
                         patientID: patientRecord.patientID
                     })
                 }
@@ -88,7 +123,7 @@ class AppointmentModel {
                         col2: patientRecord.appointmentDate3,
                         col3: patientRecord.diagnosis,
                         col4: patientRecord.hospitalContact,
-                        appointmentType: "threeMonths",
+                        appointmentType: 3,
                         patientID: patientRecord.patientID
                     })
                 }
@@ -99,7 +134,7 @@ class AppointmentModel {
                         col2: patientRecord.appointmentDate6,
                         col3: patientRecord.diagnosis,
                         col4: patientRecord.hospitalContact,
-                        appointmentType: "sixMonths",
+                        appointmentType: 6,
                         patientID: patientRecord.patientID
                     })
                 }
@@ -110,7 +145,7 @@ class AppointmentModel {
                         col2: patientRecord.appointmentDate12,
                         col3: patientRecord.diagnosis,
                         col4: patientRecord.hospitalContact,
-                        appointmentType: "twelveMonths",
+                        appointmentType: 12,
                         patientID: patientRecord.patientID
                     })
                 }
@@ -121,7 +156,7 @@ class AppointmentModel {
                         col2: patientRecord.customAppointmentDate,
                         col3: patientRecord.diagnosis,
                         col4: patientRecord.hospitalContact,
-                        appointmentType: "custom",
+                        appointmentType: 420,
                         patientID: patientRecord.patientID
                     })
                 }

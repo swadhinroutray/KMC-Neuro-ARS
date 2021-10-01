@@ -202,7 +202,7 @@ class FormModel {
         this.setIsSubmitted(false);
         const postBody = {
             name: this.patientName,
-            email: "default@gmail.com",
+            email: "defaulst@gmail.com",
 			contact: this.mobileNumber,
 			hospitalContact: this.hospitalNumber,
 			diagnosis: this.diagnosis,

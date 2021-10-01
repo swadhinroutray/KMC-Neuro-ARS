@@ -7,13 +7,15 @@ export const Table = inject('appointmentStore')(observer(({ appointmentStore }) 
         console.log("Selected", cellValues.id)
         appointmentStore.setSelectedAppointmentId(cellValues.id)
         appointmentStore.setConfirmDialogOpen(true)
+        console.log(cellValues)
     }
 
     const columns = [
-        { field: 'col1', headerName: 'Name', width: 200 },
-        { field: 'col2', headerName: 'Hospital #', width: 140 },
-        { field: 'col3', headerName: 'Diagnosis', width: 300 },
-        {
+      { field: 'col1', headerName: 'Name', width: 200 },
+      { field: 'col2', headerName: 'Date', width: 120 },
+      { field: 'col3', headerName: 'Diagnosis', width: 300 },
+      { field: 'col4', headerName: 'Hospital #', width: 140 },
+      {
             field: "delete", headerName: "Delete",
             renderCell: (cellValues) => {
               return (
@@ -28,7 +30,7 @@ export const Table = inject('appointmentStore')(observer(({ appointmentStore }) 
                 </Button>
               );
             }
-          }
+      }
     ];
 
     return (

@@ -3,7 +3,6 @@ import { toast } from 'react-toastify'
 import { get } from '../utils/api'
 
 class AppointmentModel {
-    //TODO: Remove placeholder data later. 
     _appointments = []
     isConfirmDialogOpen = false
     selectedAppointmentId = -1
@@ -69,7 +68,7 @@ class AppointmentModel {
         console.log(res)
         if (res.success) {
             this._appointments = res.data.map(patientRecord => ({
-                id:   patientRecord._id,
+                id:   (patientRecord.patientID? patientRecord.patientID: patientRecord._id),
                 col1: patientRecord.name,
                 col2: patientRecord.hospitalContact,
                 col3: patientRecord.diagnosis

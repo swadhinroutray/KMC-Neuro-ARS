@@ -10,7 +10,7 @@ async function cancelAppointment(req, res) {
 		if (appointVal == 1) {
 			result = await patient.updateOne(
 				{
-					_id: patientID,
+					patientID: patientID,
 				},
 				{
 					$set: {
@@ -22,7 +22,7 @@ async function cancelAppointment(req, res) {
 		else if (appointVal == 3) {
 			result = await patient.updateOne(
 				{
-					_id: patientID,
+					patientID: patientID,
 				},
 				{
 					$set: {
@@ -35,7 +35,7 @@ async function cancelAppointment(req, res) {
 		else if (appointVal == 6) {
 			result = await patient.updateOne(
 				{
-					_id: patientID,
+					patientID: patientID,
 				},
 				{
 					$set: {
@@ -47,7 +47,7 @@ async function cancelAppointment(req, res) {
 		else if (appointVal == 12) {
 			result = await patient.updateOne(
 				{
-					_id: patientID,
+					patientID: patientID,
 				},
 				{
 					$set: {
@@ -60,7 +60,7 @@ async function cancelAppointment(req, res) {
 			//!Custom Date Update
 			result = await patient.updateOne(
 				{
-					_id: patientID,
+					patientID: patientID,
 				},
 				{
 					$set: {

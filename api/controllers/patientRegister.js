@@ -35,7 +35,7 @@ async function createEntry(req, res) {
 
 		result = await obj.save();
 		if (!result) {
-			return sendResponse(res, 'Could not add patient');
+			return sendError(res, 'Could not add patient');
 		}
 		//! TODO: Add notification
 		await sendMessage(data.contact, data.dischargeDate);

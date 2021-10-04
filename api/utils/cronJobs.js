@@ -3,7 +3,7 @@ const { sendMessage } = require('./aws');
 async function checkAndSendSMS() {
 	try {
 		cursor = await patient.find({});
-
+		console.log(cursor);
 		for (let index = 0; index < cursor.length; index++) {
 			const element = cursor[index];
 			let date = new Date();
@@ -14,25 +14,26 @@ async function checkAndSendSMS() {
 				);
 				var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
 				console.log(diffDays);
-				if (diffDays == 2) {
+				if (diffDays > 1) {
 					const dateString = date.toLocaleDateString(
 						element.appointmentDate1
 					);
-					await sendMessage(element.number, dateString);
-					result = await patient.updateOne(
-						{
-							patientID: element.patientID,
-						},
-						{
-							$set: {
-								appointmentDate1: null,
-							},
-						}
-					);
+					console.log(element.contact);
+					await sendMessage(element.contact, dateString);
+					// result = await patient.updateOne(
+					// 	{
+					// 		patientID: element.patientID,
+					// 	},
+					// 	{
+					// 		$set: {
+					// 			appointmentDate1: null,
+					// 		},
+					// 	}
+					// );
 
-					if (!result) {
-						console.log('Cron Error');
-					}
+					// if (!result) {
+					// 	console.log('Cron Error');
+					// }
 				}
 			}
 			if (element.appointmentDate3 !== null) {
@@ -46,7 +47,7 @@ async function checkAndSendSMS() {
 					const dateString = date.toLocaleDateString(
 						element.appointmentDate3
 					);
-					await sendMessage(element.number, dateString);
+					await sendMessage(element.contact, dateString);
 					result = await patient.updateOne(
 						{
 							patientID: element.patientID,
@@ -74,7 +75,7 @@ async function checkAndSendSMS() {
 					const dateString = date.toLocaleDateString(
 						element.appointmentDate6
 					);
-					await sendMessage(element.number, dateString);
+					await sendMessage(element.contact, dateString);
 					result = await patient.updateOne(
 						{
 							patientID: element.patientID,
@@ -102,7 +103,7 @@ async function checkAndSendSMS() {
 					const dateString = date.toLocaleDateString(
 						element.appointmentDate12
 					);
-					await sendMessage(element.number, dateString);
+					await sendMessage(element.contact, dateString);
 					result = await patient.updateOne(
 						{
 							patientID: element.patientID,
@@ -130,7 +131,7 @@ async function checkAndSendSMS() {
 					const dateString = date.toLocaleDateString(
 						element.customAppointmentDate
 					);
-					await sendMessage(element.number, dateString);
+					await sendMessage(element.contact, dateString);
 					result = await patient.updateOne(
 						{
 							patientID: element.patientID,

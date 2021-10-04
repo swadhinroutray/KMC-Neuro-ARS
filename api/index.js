@@ -37,10 +37,10 @@ app.use('/api', routes);
 
 //? CRON Jobs
 cron.schedule(
-	'0 7 * * *',
+	'0 12 * * *',
 	() => {
 		try {
-			console.log('Broadcast CRON set');
+			console.log('Check CRON set');
 			cronJobs.checkAndSendSMS();
 		} catch (error) {
 			console.log(error);

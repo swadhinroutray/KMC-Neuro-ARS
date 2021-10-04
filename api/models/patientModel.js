@@ -29,10 +29,12 @@ const patientSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	doctorName: {
+	doctorEmail: {
+		// referral
 		type: String,
 	},
 	doctorNumber: {
+		//referral
 		type: String,
 	},
 	appointmentDate1: {

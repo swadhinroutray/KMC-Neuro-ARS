@@ -2,20 +2,27 @@ const { sendError, sendResponse } = require('../utils/responseHandler');
 const { patient } = require('../models/patientModel');
 const { sendMessage } = require('../utils/aws');
 const { uuid } = require('uuidv4');
-
+const { sendReferralDoc } = require('../utils/aws');
 async function createEntry(req, res) {
 	try {
 		const data = req.body;
+
+		if (data.doctorNumber) {
+			let number = '91' + data.doctorNumber;
+			await sendReferralDoc(number, data.name.trim());
+		}
 		const obj = new patient({
 			patientID: uuid(),
 			name: data.name.trim(),
 			email: data.email.trim(),
-			contact: data.contact,
+			contact: '91' + data.contact,
 			hospitalContact: data.hospitalContact,
 			dischargeDate: data.dischargeDate,
 			diagnosis: data.diagnosis,
-			doctorName: data.doctorName,
-			doctorNumber: data.doctorNumber,
+			doctorEmail: data.doctorEmail ? data.doctorEmail : '',
+			doctorNumber: data.doctorNumber
+				? '91' + data.doctorNumber
+				: '',
 			appointmentDate1: data.appointmentDate1
 				? new Date(data.appointmentDate1)
 				: '',
@@ -37,8 +44,6 @@ async function createEntry(req, res) {
 		if (!result) {
 			return sendError(res, 'Could not add patient');
 		}
-		//! TODO: Add notification
-		await sendMessage(data.contact, data.dischargeDate);
 
 		return sendResponse(res, 'Added new patient successfully');
 	} catch (error) {

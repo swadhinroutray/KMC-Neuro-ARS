@@ -37,7 +37,7 @@ app.use('/api', routes);
 
 //? CRON Jobs
 cron.schedule(
-	'0 12 * * *',
+	'0 9 * * *',
 	() => {
 		try {
 			console.log('Check CRON set');

@@ -23,9 +23,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
   
-const AppointmentsPage = inject('formStore', 'loginStore')(observer(({ formStore, loginStore }) => {
+const AppointmentsPage = inject('appointmentStore', 'loginStore')(observer(({ appointmentStore, loginStore }) => {
     useEffect(() => {
         loginStore.refreshAuth();
+        appointmentStore.fetchAppointments();
     }, [loginStore]);
     const classes = useStyles();
     return (

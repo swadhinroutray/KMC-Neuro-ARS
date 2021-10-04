@@ -18,7 +18,6 @@ function isLoggedin(req, res, next) {
 
 //* Auth Routes
 router.get('/', controller.hello);
-
 router.get('/test', test.checkAndSendSMS);
 
 router.post('/register/', controller.register);

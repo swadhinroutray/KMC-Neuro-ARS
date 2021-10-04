@@ -199,10 +199,11 @@ class FormModel {
         this.isSubmitted = state;
     }
     submit() {
+        // TODO: Remove ugly hack for unique emails once schema is updated.
         this.setIsSubmitted(false);
         const postBody = {
             name: this.patientName,
-            email: "default@gmail.com",
+            email: "defult@gmail.com" + Date().substr(2, 8),
 			contact: this.mobileNumber,
 			hospitalContact: this.hospitalNumber,
 			diagnosis: this.diagnosis,
@@ -237,6 +238,8 @@ class FormModel {
                 draggable: false,
                 progress:undefined
             });
+            setTimeout(() => {window.location.reload();
+            }, 3000)
         }
         else {
             toast.error(

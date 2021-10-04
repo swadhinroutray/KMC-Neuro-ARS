@@ -20,20 +20,20 @@ async function checkAndSendSMS() {
 					);
 					console.log(element.contact);
 					await sendMessage(element.contact, dateString);
-					// result = await patient.updateOne(
-					// 	{
-					// 		patientID: element.patientID,
-					// 	},
-					// 	{
-					// 		$set: {
-					// 			appointmentDate1: null,
-					// 		},
-					// 	}
-					// );
+					result = await patient.updateOne(
+						{
+							patientID: element.patientID,
+						},
+						{
+							$set: {
+								appointmentDate1: null,
+							},
+						}
+					);
 
-					// if (!result) {
-					// 	console.log('Cron Error');
-					// }
+					if (!result) {
+						console.log('Cron Error');
+					}
 				}
 			}
 			if (element.appointmentDate3 !== null) {

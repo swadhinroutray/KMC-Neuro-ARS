@@ -14,7 +14,6 @@ import {
 import { toMaterialFormat } from '../utils/helpers';
 import { post } from '../utils/api';
 import { toast } from 'react-toastify';
-import history from '../routes/history';
 
 const dayOfWeekMapping = {
 	sun: 0,
@@ -219,16 +218,16 @@ class FormModel {
 	}
 
 	setHospitalNumber(value) {
-		this.hospitalNumber = value.trim();
+		this.hospitalNumber = value;
 	}
 	setPatientName(value) {
-		this.patientName = value.trim();
+		this.patientName = value;
 	}
 	setDiagnosis(value) {
-		this.diagnosis = value.trim();
+		this.diagnosis = value;
 	}
 	setMobileNumber(value) {
-		this.mobileNumber = value.trim();
+		this.mobileNumber = value;
 	}
 	setDateOneMonth(newDate) {
 		this.dateOneMonth = this.setDate(new Date(newDate));
@@ -249,32 +248,31 @@ class FormModel {
 		this.wasReferred = state;
 	}
 	setReferrerName(name) {
-		this.referrerName = name.trim();
+		this.referrerName = name;
 	}
 	setReferrerMobileNumber(number) {
-		this.referrerMobileNumber = number.trim();
+		this.referrerMobileNumber = number;
 	}
 	setIsSubmitted(state) {
 		this.isSubmitted = state;
 	}
 	submit() {
-		// TODO: Remove ugly hack for unique emails once schema is updated.
 		this.setIsSubmitted(false);
 		const postBody = {
-			name: this.patientName,
-			contact: this.mobileNumber,
-			hospitalContact: this.hospitalNumber,
-			diagnosis: this.diagnosis,
+			name: this.patientName.trim(),
+			contact: this.mobileNumber.trim(),
+			hospitalContact: this.hospitalNumber.trim(),
+			diagnosis: this.diagnosis.trim(),
 
 			dischargeDate: this.dateDischarge,
-			appointmentDate1: this.dateOneMonth,
-			appointmentDate3: this.dateThreeMonths,
-			appointmentDate6: this.dateSixMonths,
-			appointmentDate12: this.dateOneYear,
-			customAppointmentDate: this.dateAdditional,
+			appointmentDate1: this.appointmentsControl["oneMonth"] ? this.dateOneMonth: "",
+			appointmentDate3: this.appointmentsControl["threeMonths"] ? this.dateThreeMonths: "",
+			appointmentDate6: this.appointmentsControl["sixMonths"] ? this.dateSixMonths: "",
+			appointmentDate12: this.appointmentsControl["oneYear"] ? this.dateOneYear: "",
+			customAppointmentDate: this.appointmentsControl["additional"] ? this.dateAdditional: "",
 
-			doctorName: this.referrerName,
-			doctorNumber: this.referrerMobileNumber,
+			doctorName: this.referrerName.trim(),
+			doctorNumber: this.referrerMobileNumber.trim(),
 		};
 
 		try {

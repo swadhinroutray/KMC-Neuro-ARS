@@ -109,3 +109,6 @@ api/node_modules
 SMS-Sender-KMC.csv
 **.DS_Store
 *.rdp
+
+KMC-ARS-EC2.pem
+kmc-ghub-pat.txt*

@@ -17,7 +17,6 @@ async function createEntry(req, res) {
 		const obj = new patient({
 			patientID: uuid(),
 			name: data.name.trim(),
-			email: data.email.trim(),
 			contact: '91' + data.contact,
 			hospitalContact: data.hospitalContact,
 			dischargeDate: data.dischargeDate,

@@ -3,7 +3,7 @@ const { sendMessage } = require('./aws');
 async function checkAndSendSMS() {
 	try {
 		cursor = await patient.find({});
-		console.log(cursor);
+		// console.log(cursor);
 		for (let index = 0; index < cursor.length; index++) {
 			const element = cursor[index];
 			let date = new Date();
@@ -14,11 +14,10 @@ async function checkAndSendSMS() {
 				);
 				var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
 				console.log(diffDays);
-				if (diffDays > 1) {
+				if (diffDays == 2) {
 					const dateString = date.toLocaleDateString(
 						element.appointmentDate1
 					);
-					console.log(element.contact);
 					await sendMessage(
 						element.contact,
 						dateString,
@@ -46,7 +45,7 @@ async function checkAndSendSMS() {
 						date.getTime()
 				);
 				var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-				console.log(diffDays);
+
 				if (diffDays == 2) {
 					const dateString = date.toLocaleDateString(
 						element.appointmentDate3
@@ -78,7 +77,7 @@ async function checkAndSendSMS() {
 						date.getTime()
 				);
 				var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-				console.log(diffDays);
+				// console.log(diffDays);
 				if (diffDays == 2) {
 					const dateString = date.toLocaleDateString(
 						element.appointmentDate6
@@ -110,7 +109,7 @@ async function checkAndSendSMS() {
 						date.getTime()
 				);
 				var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-				console.log(diffDays);
+				// console.log(diffDays);
 				if (diffDays == 2) {
 					const dateString = date.toLocaleDateString(
 						element.appointmentDate12
@@ -142,7 +141,7 @@ async function checkAndSendSMS() {
 						date.getTime()
 				);
 				var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-				console.log(diffDays);
+				// console.log(diffDays);
 				if (diffDays == 2) {
 					const dateString = date.toLocaleDateString(
 						element.customAppointmentDate

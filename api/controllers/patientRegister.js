@@ -1,6 +1,5 @@
 const { sendError, sendResponse } = require('../utils/responseHandler');
 const { patient } = require('../models/patientModel');
-const { sendMessage } = require('../utils/aws');
 const { uuid } = require('uuidv4');
 const { sendReferralDoc } = require('../utils/aws');
 async function createEntry(req, res) {
@@ -9,7 +8,11 @@ async function createEntry(req, res) {
 
 		if (data.doctorNumber) {
 			let number = '91' + data.doctorNumber;
-			await sendReferralDoc(number, data.name.trim());
+			await sendReferralDoc(
+				number,
+				data.name.trim(),
+				data.doctorName
+			);
 		}
 		const obj = new patient({
 			patientID: uuid(),
@@ -20,6 +23,7 @@ async function createEntry(req, res) {
 			dischargeDate: data.dischargeDate,
 			diagnosis: data.diagnosis,
 			doctorEmail: data.doctorEmail ? data.doctorEmail : '',
+			doctorName: data.doctorName,
 			doctorNumber: data.doctorNumber
 				? '91' + data.doctorNumber
 				: '',

@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 
-async function sendMessage(number, date) {
-	const text = `Greetings from KMC, Manipal! \nYour next appointment at the Neurosurgery Department is on ${date}`;
+async function sendMessage(number, date, name) {
+	const text = `Goodmorning ${name} , Hope your doing fine , your follow-up in KmC manipal neurosurgery OPD is in 2 days. Please come for a review check up at 9am . Thank you :) `;
 	var params = {
 		Message: text,
 		PhoneNumber: number,
@@ -19,8 +19,8 @@ async function sendMessage(number, date) {
 			console.log(JSON.stringify({ Error: err }));
 		});
 }
-async function sendReferralDoc(number, name) {
-	const text = `Thank you for referring ${name} to KMC.`;
+async function sendReferralDoc(number, name, doctorName) {
+	const text = `Hello Dr ${doctorName}, Thank you for referring ${name} to us . He/she is doing fine and has been operated for the same . Planning to discharge the patient tomorrow.`;
 	var params = {
 		Message: text,
 		PhoneNumber: number,

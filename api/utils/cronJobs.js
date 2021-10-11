@@ -19,7 +19,11 @@ async function checkAndSendSMS() {
 						element.appointmentDate1
 					);
 					console.log(element.contact);
-					await sendMessage(element.contact, dateString);
+					await sendMessage(
+						element.contact,
+						dateString,
+						element.name
+					);
 					result = await patient.updateOne(
 						{
 							patientID: element.patientID,
@@ -47,7 +51,11 @@ async function checkAndSendSMS() {
 					const dateString = date.toLocaleDateString(
 						element.appointmentDate3
 					);
-					await sendMessage(element.contact, dateString);
+					await sendMessage(
+						element.contact,
+						dateString,
+						element.name
+					);
 					result = await patient.updateOne(
 						{
 							patientID: element.patientID,
@@ -75,7 +83,11 @@ async function checkAndSendSMS() {
 					const dateString = date.toLocaleDateString(
 						element.appointmentDate6
 					);
-					await sendMessage(element.contact, dateString);
+					await sendMessage(
+						element.contact,
+						dateString,
+						element.name
+					);
 					result = await patient.updateOne(
 						{
 							patientID: element.patientID,
@@ -103,7 +115,11 @@ async function checkAndSendSMS() {
 					const dateString = date.toLocaleDateString(
 						element.appointmentDate12
 					);
-					await sendMessage(element.contact, dateString);
+					await sendMessage(
+						element.contact,
+						dateString,
+						element.name
+					);
 					result = await patient.updateOne(
 						{
 							patientID: element.patientID,
@@ -131,7 +147,11 @@ async function checkAndSendSMS() {
 					const dateString = date.toLocaleDateString(
 						element.customAppointmentDate
 					);
-					await sendMessage(element.contact, dateString);
+					await sendMessage(
+						element.contact,
+						dateString,
+						element.name
+					);
 					result = await patient.updateOne(
 						{
 							patientID: element.patientID,

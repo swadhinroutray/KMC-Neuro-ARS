@@ -14,7 +14,6 @@ import {
 import { toMaterialFormat } from '../utils/helpers';
 import { post } from '../utils/api';
 import { toast } from 'react-toastify';
-import history from '../routes/history';
 
 const dayOfWeekMapping = {
 	sun: 0,
@@ -266,11 +265,11 @@ class FormModel {
 			diagnosis: this.diagnosis.trim(),
 
 			dischargeDate: this.dateDischarge,
-			appointmentDate1: this.dateOneMonth,
-			appointmentDate3: this.dateThreeMonths,
-			appointmentDate6: this.dateSixMonths,
-			appointmentDate12: this.dateOneYear,
-			customAppointmentDate: this.dateAdditional,
+			appointmentDate1: this.appointmentsControl["oneMonth"] ? this.dateOneMonth: "",
+			appointmentDate3: this.appointmentsControl["threeMonths"] ? this.dateThreeMonths: "",
+			appointmentDate6: this.appointmentsControl["sixMonths"] ? this.dateSixMonths: "",
+			appointmentDate12: this.appointmentsControl["oneYear"] ? this.dateOneYear: "",
+			customAppointmentDate: this.appointmentsControl["additional"] ? this.dateAdditional: "",
 
 			doctorName: this.referrerName.trim(),
 			doctorNumber: this.referrerMobileNumber.trim(),

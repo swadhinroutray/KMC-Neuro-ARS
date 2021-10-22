@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: 'center',
 	},
 	avatar: {
-		margin: theme.spacing(1),
+		margin: theme.spacing(2),
 		backgroundColor: theme.palette.secondary.main,
 	},
 	form: {
@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
 	submit: {
 		margin: theme.spacing(3, 0, 2),
 	},
+	title: {
+		fontWeight: 'bolder'
+	}
 }));
 
 const LoginPage = inject('loginStore')(
@@ -49,10 +52,13 @@ const LoginPage = inject('loginStore')(
 		return (
 			<Container component="main" maxWidth="xs">
 				<div className={classes.paper}>
+					<Typography component="h1" variant="h5" align="center" className={classes.title}>
+						Appointment & Referral SMS Service
+					</Typography>
 					<Avatar className={classes.avatar}>
 						<LockOutlinedIcon />
 					</Avatar>
-					<Typography component="h1" variant="h5">
+					<Typography component="h2" variant="h5">
 						Log in
 					</Typography>
 					<form

@@ -37,6 +37,26 @@ async function sendReferralDoc(number, name, doctorName) {
 		.catch(function (err) {
 			console.log(JSON.stringify({ Error: err }));
 		});
+
+	const text2 =
+		'ಶುಭೋದಯ \n ನೀವು ಆರೋಗ್ಯದಿಂದಿರುವಿರಿ ಎಂದು ಭಾವಿಸುತ್ತೇವೆ. ಕೆ. ಎಂ. ಸಿ., ಮಣಿಪಾಲದ ನ್ಯೂರೋಸಜ೯ರಿ ವಿಭಾಗದಲ್ಲಿ ನಿಮ್ಮ ಮರು ತಪಾಸಣೆ ಮುಂದಿನ ಎರಡು ದಿನಗಳಲ್ಲಿ ಇರುತ್ತದೆ. ತಪಾಸಣೆಗೆ ಬರುವ ದಿನ ಬೆಳಿಗ್ಗೆ 9.00 ಗಂಟೆಗೆ ನೊಂದಣಿ ಮಾಡಿ ಬರಬೇಕಾಗಿ ವಿನಂತಿ.\n\nವಂದನೆಗಳು.';
+
+	var params = {
+		Message: text2,
+		PhoneNumber: number,
+	};
+	var publishTextPromise = new AWS.SNS({ apiVersion: '2010-03-31' })
+		.publish(params)
+		.promise();
+
+	publishTextPromise
+		.then(function (data) {
+			// console.log(JSON.stringify({ MessageID: data.MessageId }));
+			console.log('Sent Message');
+		})
+		.catch(function (err) {
+			console.log(JSON.stringify({ Error: err }));
+		});
 }
 module.exports = {
 	sendMessage,

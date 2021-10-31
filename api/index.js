@@ -1,5 +1,7 @@
 const path = require('path');
 require('dotenv').config({ path: path.resolve('../.env') });
+// require('dotenv').config({ path:'/home/ubuntu/KMC-Neuro-ARS/.env' });
+
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 8000;

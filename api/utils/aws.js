@@ -18,11 +18,11 @@ async function sendMessage(number, date, name) {
 		.catch(function (err) {
 			console.log(JSON.stringify({ Error: err }));
 		});
-}
-async function sendReferralDoc(number, name, doctorName) {
-	const text = `Hello Dr ${doctorName}, Thank you for referring ${name} to us . He/she is doing fine and has been operated for the same . Planning to discharge the patient tomorrow.`;
+	const text2 =
+		'ಶುಭೋದಯ \n ನೀವು ಆರೋಗ್ಯದಿಂದಿರುವಿರಿ ಎಂದು ಭಾವಿಸುತ್ತೇವೆ. ಕೆ. ಎಂ. ಸಿ., ಮಣಿಪಾಲದ ನ್ಯೂರೋಸಜ೯ರಿ ವಿಭಾಗದಲ್ಲಿ ನಿಮ್ಮ ಮರು ತಪಾಸಣೆ ಮುಂದಿನ ಎರಡು ದಿನಗಳಲ್ಲಿ ಇರುತ್ತದೆ. ತಪಾಸಣೆಗೆ ಬರುವ ದಿನ ಬೆಳಿಗ್ಗೆ 9.00 ಗಂಟೆಗೆ ನೊಂದಣಿ ಮಾಡಿ ಬರಬೇಕಾಗಿ ವಿನಂತಿ.\n\nವಂದನೆಗಳು.';
+
 	var params = {
-		Message: text,
+		Message: text2,
 		PhoneNumber: number,
 	};
 	var publishTextPromise = new AWS.SNS({ apiVersion: '2010-03-31' })
@@ -37,12 +37,11 @@ async function sendReferralDoc(number, name, doctorName) {
 		.catch(function (err) {
 			console.log(JSON.stringify({ Error: err }));
 		});
-
-	const text2 =
-		'ಶುಭೋದಯ \n ನೀವು ಆರೋಗ್ಯದಿಂದಿರುವಿರಿ ಎಂದು ಭಾವಿಸುತ್ತೇವೆ. ಕೆ. ಎಂ. ಸಿ., ಮಣಿಪಾಲದ ನ್ಯೂರೋಸಜ೯ರಿ ವಿಭಾಗದಲ್ಲಿ ನಿಮ್ಮ ಮರು ತಪಾಸಣೆ ಮುಂದಿನ ಎರಡು ದಿನಗಳಲ್ಲಿ ಇರುತ್ತದೆ. ತಪಾಸಣೆಗೆ ಬರುವ ದಿನ ಬೆಳಿಗ್ಗೆ 9.00 ಗಂಟೆಗೆ ನೊಂದಣಿ ಮಾಡಿ ಬರಬೇಕಾಗಿ ವಿನಂತಿ.\n\nವಂದನೆಗಳು.';
-
+}
+async function sendReferralDoc(number, name, doctorName) {
+	const text = `Hello Dr ${doctorName}, Thank you for referring ${name} to us . He/she is doing fine and has been operated for the same . Planning to discharge the patient tomorrow.`;
 	var params = {
-		Message: text2,
+		Message: text,
 		PhoneNumber: number,
 	};
 	var publishTextPromise = new AWS.SNS({ apiVersion: '2010-03-31' })

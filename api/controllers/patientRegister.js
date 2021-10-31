@@ -21,7 +21,6 @@ async function createEntry(req, res) {
 			hospitalContact: data.hospitalContact,
 			dischargeDate: data.dischargeDate,
 			diagnosis: data.diagnosis,
-			doctorEmail: data.doctorEmail ? data.doctorEmail : '',
 			doctorName: data.doctorName,
 			doctorNumber: data.doctorNumber
 				? '91' + data.doctorNumber
